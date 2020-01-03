@@ -2,3 +2,15 @@
   margin: 0;
   padding: 0;
 }
+
+.App {
+  background-color: mintcream;
+  min-height: 100vh;
+  height: auto;
+  padding: 1.5rem 1rem;
+}
+
+.spinner_container {
+  display: flex;
+  justify-content: center;
+}
