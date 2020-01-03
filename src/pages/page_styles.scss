@@ -1,0 +1,16 @@
+.table {
+    thead th {
+        &:hover {
+            background-color: seagreen;
+        }
+    }
+
+    tbody {
+        tr {
+            &:hover {
+                cursor: pointer;
+                background-color: cadetblue;
+            }
+        }
+    }
+}

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Loader from 'react-loader-spinner'
 import axios from 'axios';
+import './page_styles.scss';
 import {
   BrowserRouter as Router,
   Link
@@ -16,6 +17,7 @@ class HomePage extends Component {
       search_text: ''
     }
     this.searchText = this.searchText.bind(this);
+    this.sortResults = this.sortResults.bind(this);
     this.loadAPIData = this.loadAPIData.bind(this);
   }
 
@@ -47,83 +49,95 @@ class HomePage extends Component {
     });
   }
 
+  sortResults(event) {
+    const { search_text, apiData } = this.state;
+    const choice = event.target.getAttribute("data-role");
+    console.log('Sort results method called..', choice);
+    let sortedResult;
+
+    switch(choice) {
+      case 'sn':
+        sortedResult = apiData.sort((a, b) => {
+          if(a.id < b.id) { return -1; }
+          if(a.id > b.id) { return 1; }
+          return 0;
+        });
+        break;
+      case 'firstName':
+        sortedResult = apiData.sort((a, b) => {
+          if(a.first_name < b.first_name) { return -1; }
+          if(a.first_name > b.first_name) { return 1; }
+          return 0;
+        });
+        break;
+      case 'lastName':
+        sortedResult = apiData.sort((a, b) => {
+          if(a.last_name < b.last_name) { return -1; }
+          if(a.last_name > b.last_name) { return 1; }
+          return 0;
+        });
+        break;
+      case 'company':
+        sortedResult = apiData.sort((a, b) => {
+          if(a.company_name < b.company_name) { return -1; }
+          if(a.company_name > b.company_name) { return 1; }
+          return 0;
+        });
+        break;
+      case 'city':
+        sortedResult = apiData.sort((a, b) => {
+          if(a.city < b.city) { return -1; }
+          if(a.city > b.city) { return 1; }
+          return 0;
+        });
+        break;
+      case 'state':
+        sortedResult = apiData.sort((a, b) => {
+          if(a.state < b.state) { return -1; }
+          if(a.state > b.state) { return 1; }
+          return 0;
+        });
+        break;
+      case 'zip':
+        sortedResult = apiData.sort((a, b) => {
+          if(a.zip < b.zip) { return -1; }
+          if(a.zip > b.zip) { return 1; }
+          return 0;
+        });
+        break;
+      case 'email':
+        sortedResult = apiData.sort((a, b) => {
+          if(a.email < b.email) { return -1; }
+          if(a.email > b.email) { return 1; }
+          return 0;
+        });
+        break;
+      case 'web':
+        sortedResult = apiData.sort((a, b) => {
+          if(a.web < b.web) { return -1; }
+          if(a.web > b.web) { return 1; }
+          return 0;
+        });
+        break;
+      case 'age':
+        sortedResult = apiData.sort((a, b) => {
+          if(a.age < b.age) { return -1; }
+          if(a.age > b.age) { return 1; }
+          return 0;
+        });
+        break;
+    }
+
+    this.setState({
+      apiData: sortedResult
+    })
+  }
+
   render() {
     const { dataLoaded, apiData, search_text } = this.state;
     let filteredData = apiData.filter((item) => {
       return item.first_name.indexOf(search_text) !== -1;
     });
-
-    // Sort by last name
-    // let sortedResult = apiData.sort((a, b) => {
-    //   if(a.last_name < b.last_name) { return -1; }
-    //   if(a.last_name > b.last_name) { return 1; }
-    //     return 0;
-    //   }
-    // );
-
-    // Sort by First Name
-    // let sortedResult = apiData.sort((a, b) => {
-    //     if(a.first_name < b.first_name) { return -1; }
-    //     if(a.first_name > b.first_name) { return 1; }
-    //     return 0;
-    //   }
-    // );
-
-    // Sort by Company Name
-    // let sortedResult = apiData.sort((a, b) => {
-    //     if(a.company_name < b.company_name) { return -1; }
-    //     if(a.company_name > b.company_name) { return 1; }
-    //     return 0;
-    //   }
-    // );
-
-    // Sort by City
-    // let sortedResult = apiData.sort((a, b) => {
-    //     if(a.city < b.city) { return -1; }
-    //     if(a.city > b.city) { return 1; }
-    //     return 0;
-    //   }
-    // );
-
-    // Sort by state
-    // let sortedResult = apiData.sort((a, b) => {
-    //     if(a.state < b.state) { return -1; }
-    //     if(a.state > b.state) { return 1; }
-    //     return 0;
-    //   }
-    // );
-
-    // Sort by ZipCode
-    // let sortedResult = apiData.sort((a, b) => {
-    //     if(a.zip < b.zip) { return -1; }
-    //     if(a.zip > b.zip) { return 1; }
-    //     return 0;
-    //   }
-    // );
-
-    // Sort by Email
-    // let sortedResult = apiData.sort((a, b) => {
-    //     if(a.email < b.email) { return -1; }
-    //     if(a.email > b.email) { return 1; }
-    //     return 0;
-    //   }
-    // );
-
-    // Sort By Web
-    // let sortedResult = apiData.sort((a, b) => {
-    //     if(a.web < b.web) { return -1; }
-    //     if(a.web > b.web) { return 1; }
-    //     return 0;
-    //   }
-    // );
-
-    // Sort by Age
-    // let sortedResult = apiData.sort((a, b) => {
-    //     if(a.age < b.age) { return -1; }
-    //     if(a.age > b.age) { return 1; }
-    //     return 0;
-    //   }
-    // );
 
     if(dataLoaded) {
       return (
@@ -138,16 +152,36 @@ class HomePage extends Component {
           <table className="table">
             <thead>
             <tr>
-              <th>SN</th>
-              <th>First Name</th>
-              <th>Last Name</th>
-              <th>Company</th>
-              <th>City</th>
-              <th>State</th>
-              <th>ZIP</th>
-              <th>Email</th>
-              <th>Web</th>
-              <th>Age</th>
+              <th data-role="sn" onClick={(e) => {
+                this.sortResults(e)
+              }}>SN</th>
+              <th data-role="firstName" onClick={(e) => {
+                this.sortResults(e)
+              }}>First Name</th>
+              <th data-role="lastName" onClick={(e) => {
+                this.sortResults(e)
+              }}>Last Name</th>
+              <th data-role="company" onClick={(e) => {
+                this.sortResults(e)
+              }}>Company</th>
+              <th data-role="city" onClick={(e) => {
+                this.sortResults(e)
+              }}>City</th>
+              <th data-role="state" onClick={(e) => {
+                this.sortResults(e)
+              }}>State</th>
+              <th data-role="zip" onClick={(e) => {
+                this.sortResults(e)
+              }}>ZIP</th>
+              <th data-role="email" onClick={(e) => {
+                this.sortResults(e)
+              }}>Email</th>
+              <th data-role="web" onClick={(e) => {
+                this.sortResults(e)
+              }}>Web</th>
+              <th data-role="age" onClick={(e) => {
+                this.sortResults(e)
+              }}>Age</th>
             </tr>
             </thead>
 
