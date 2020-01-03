@@ -1,16 +1,82 @@
 .table {
     thead th {
+        text-align: center !important;
         &:hover {
             background-color: seagreen;
+            color: mintcream;
         }
+    }
+
+    thead th:nth-child(1) {
+        width: 2%;
+    }
+
+    thead th:nth-child(2) {
+        width: 10%;
+    }
+
+    thead th:nth-child(3) {
+        width: 10%;
+    }
+
+    thead th:nth-child(4), tbody tr td:nth-child(4) {
+        width: 15%;
+    }
+
+    thead th:nth-child(5), tbody tr td:nth-child(5) {
+        width: 10%;
+    }
+
+    thead th:nth-child(6), tbody tr td:nth-child(6) {
+        width: 5%;
+    }
+
+    thead th:nth-child(7), tbody tr td:nth-child(7) {
+        width: 5%;
+    }
+
+    thead th:nth-child(8), tbody tr td:nth-child(8) {
+        width: 20%;
+    }
+
+    thead th:nth-child(9), tbody tr td:nth-child(9) {
+        width: 20%;
+    }
+
+    thead th:nth-child(10), tbody tr td:nth-child(10) {
+        width: 3%;
     }
 
     tbody {
         tr {
+            td {
+                text-align: center !important;
+            }
             &:hover {
                 cursor: pointer;
                 background-color: cadetblue;
+                color: azure;
             }
         }
+    }
+}
+
+.detail_container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1rem auto;
+    font-size: 1.2rem;
+    border-bottom: 1px solid seagreen;
+
+}
+
+.card-header {
+    padding: 1rem;
+    color: seagreen;
+    font-family: "Helvetica Neue",sans-serif;
+    p {
+        text-align: center;
+        font-size: 1.8rem;
     }
 }

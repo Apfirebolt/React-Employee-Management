@@ -1,34 +1,83 @@
 import React, { Component } from 'react';
+import './page_styles.scss';
 
 class EmployeeDetailPage extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      first_name: '',
+      last_name: '',
+      company: '',
+      city: '',
+      state: '',
+      zip: '',
+      email: '',
+      web: '',
+      age: ''
+    }
+  }
 
+  componentDidMount() {
+    let obj_detail = this.props.history.location.state.detail;
+    this.setState({
+      first_name: obj_detail.first_name,
+      last_name: obj_detail.last_name,
+      company: obj_detail.company_name,
+      city: obj_detail.city,
+      state: obj_detail.state,
+      zip: obj_detail.zip,
+      email: obj_detail.email,
+      web: obj_detail.web,
+      age: obj_detail.age
+    })
   }
 
   render() {
+    const { first_name, last_name, company, city, state, zip, email, web, age } = this.state;
     return (
       <div className="card">
         <div className="card-header">
-          <p>John Cena</p>
+          <p>{first_name} {last_name}</p>
         </div>
         <div className="card-content">
           <div className="content">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.
-            <a href="#">@bulmaio</a>. <a href="#">#css</a> <a href="#">#responsive</a>
-            <br />
-            <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
-            <p>Company</p>
-            <p>City</p>
-            <p>State</p>
-            <p>Zip</p>
-            <p>Email</p>
-            <p>Web</p>
-            <p>Age</p>
+
+            <div className="detail_container">
+              <p>Company</p>
+              <p>{company}</p>
+            </div>
+
+            <div className="detail_container">
+              <p>City</p>
+              <p>{city}</p>
+            </div>
+
+            <div className="detail_container">
+              <p>State</p>
+              <p>{state}</p>
+            </div>
+
+            <div className="detail_container">
+              <p>Zip</p>
+              <p>{zip}</p>
+            </div>
+
+            <div className="detail_container">
+              <p>Email</p>
+              <p>{email}</p>
+            </div>
+
+            <div className="detail_container">
+              <p>Web</p>
+              <p>{web}</p>
+            </div>
+
+            <div className="detail_container">
+              <p>Age</p>
+              <p>{age}</p>
+            </div>
           </div>
         </div>
-        <footer className="card-footer">
-        </footer>
       </div>
     )
   }

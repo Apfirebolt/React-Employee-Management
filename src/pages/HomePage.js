@@ -19,10 +19,19 @@ class HomePage extends Component {
     this.searchText = this.searchText.bind(this);
     this.sortResults = this.sortResults.bind(this);
     this.loadAPIData = this.loadAPIData.bind(this);
+    this.goToDetail = this.goToDetail.bind(this);
   }
 
   componentDidMount() {
     this.loadAPIData();
+  }
+
+  goToDetail(e, id) {
+    const { history } = this.props;
+    const { apiData } = this.state;
+
+    let current_data = apiData[id-1];
+    history.push(`/user/${id}`, { detail: current_data });
   }
 
   loadAPIData() {
@@ -52,7 +61,6 @@ class HomePage extends Component {
   sortResults(event) {
     const { search_text, apiData } = this.state;
     const choice = event.target.getAttribute("data-role");
-    console.log('Sort results method called..', choice);
     let sortedResult;
 
     switch(choice) {
@@ -154,41 +162,41 @@ class HomePage extends Component {
             <tr>
               <th data-role="sn" onClick={(e) => {
                 this.sortResults(e)
-              }}>SN</th>
+              }}>SN <i class="fa fa-angle-down"></i></th>
               <th data-role="firstName" onClick={(e) => {
                 this.sortResults(e)
-              }}>First Name</th>
+              }}>First Name<i className="fa fa-angle-down"></i></th>
               <th data-role="lastName" onClick={(e) => {
                 this.sortResults(e)
-              }}>Last Name</th>
+              }}>Last Name<i className="fa fa-angle-down"></i></th>
               <th data-role="company" onClick={(e) => {
                 this.sortResults(e)
-              }}>Company</th>
+              }}>Company<i className="fa fa-angle-down"></i></th>
               <th data-role="city" onClick={(e) => {
                 this.sortResults(e)
-              }}>City</th>
+              }}>City<i className="fa fa-angle-down"></i></th>
               <th data-role="state" onClick={(e) => {
                 this.sortResults(e)
-              }}>State</th>
+              }}>State<i className="fa fa-angle-down"></i></th>
               <th data-role="zip" onClick={(e) => {
                 this.sortResults(e)
-              }}>ZIP</th>
+              }}>ZIP<i className="fa fa-angle-down"></i></th>
               <th data-role="email" onClick={(e) => {
                 this.sortResults(e)
-              }}>Email</th>
+              }}>Email<i className="fa fa-angle-down"></i></th>
               <th data-role="web" onClick={(e) => {
                 this.sortResults(e)
-              }}>Web</th>
+              }}>Web<i className="fa fa-angle-down"></i></th>
               <th data-role="age" onClick={(e) => {
                 this.sortResults(e)
-              }}>Age</th>
+              }}>Age<i className="fa fa-angle-down"></i></th>
             </tr>
             </thead>
 
             <tbody>
             {filteredData.map((item, index) => {
               return (
-                <tr key={item.id}>
+                <tr key={item.id} onClick={(e) => {this.goToDetail(e, item.id)}}>
                   <td><Link to="/employee" >{item.id}</Link></td>
                   <td>{item.first_name}</td>
                   <td>{item.last_name}</td>

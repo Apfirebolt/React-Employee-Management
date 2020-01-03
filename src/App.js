@@ -5,14 +5,16 @@ import { BrowserRouter as Router, Route, NavLink, Switch, Redirect } from 'react
 
 import HomePage from './pages/HomePage';
 import EmployeeDetailPage from './pages/EmployeeDetail';
+import Navbar from './components/Navbar';
 
 function App() {
   return (
     <div className="App">
+      <Navbar/>
       <Router>
         <Switch>
           <Route exact path="/" component={HomePage} />
-          <Route exact path="/employee" component={EmployeeDetailPage} />
+          <Route exact path="/user/:id" component={EmployeeDetailPage} />
         </Switch>
       </Router>
     </div>
