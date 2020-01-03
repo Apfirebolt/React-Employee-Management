@@ -50,13 +50,86 @@ class HomePage extends Component {
   render() {
     const { dataLoaded, apiData, search_text } = this.state;
     let filteredData = apiData.filter((item) => {
-      return item.first_name.indexOf(search_text) != -1;
+      return item.first_name.indexOf(search_text) !== -1;
     });
+
+    // Sort by last name
+    // let sortedResult = apiData.sort((a, b) => {
+    //   if(a.last_name < b.last_name) { return -1; }
+    //   if(a.last_name > b.last_name) { return 1; }
+    //     return 0;
+    //   }
+    // );
+
+    // Sort by First Name
+    // let sortedResult = apiData.sort((a, b) => {
+    //     if(a.first_name < b.first_name) { return -1; }
+    //     if(a.first_name > b.first_name) { return 1; }
+    //     return 0;
+    //   }
+    // );
+
+    // Sort by Company Name
+    // let sortedResult = apiData.sort((a, b) => {
+    //     if(a.company_name < b.company_name) { return -1; }
+    //     if(a.company_name > b.company_name) { return 1; }
+    //     return 0;
+    //   }
+    // );
+
+    // Sort by City
+    // let sortedResult = apiData.sort((a, b) => {
+    //     if(a.city < b.city) { return -1; }
+    //     if(a.city > b.city) { return 1; }
+    //     return 0;
+    //   }
+    // );
+
+    // Sort by state
+    // let sortedResult = apiData.sort((a, b) => {
+    //     if(a.state < b.state) { return -1; }
+    //     if(a.state > b.state) { return 1; }
+    //     return 0;
+    //   }
+    // );
+
+    // Sort by ZipCode
+    // let sortedResult = apiData.sort((a, b) => {
+    //     if(a.zip < b.zip) { return -1; }
+    //     if(a.zip > b.zip) { return 1; }
+    //     return 0;
+    //   }
+    // );
+
+    // Sort by Email
+    // let sortedResult = apiData.sort((a, b) => {
+    //     if(a.email < b.email) { return -1; }
+    //     if(a.email > b.email) { return 1; }
+    //     return 0;
+    //   }
+    // );
+
+    // Sort By Web
+    // let sortedResult = apiData.sort((a, b) => {
+    //     if(a.web < b.web) { return -1; }
+    //     if(a.web > b.web) { return 1; }
+    //     return 0;
+    //   }
+    // );
+
+    // Sort by Age
+    // let sortedResult = apiData.sort((a, b) => {
+    //     if(a.age < b.age) { return -1; }
+    //     if(a.age > b.age) { return 1; }
+    //     return 0;
+    //   }
+    // );
+
     if(dataLoaded) {
       return (
         <div>
           <div className="field">
-            <label className="label">Enter Name to search! {search_text}</label>
+            <label className="label"><i className=""></i>Enter Name to search! {search_text}</label>
             <div className="control">
               <input className="input" type="text" onChange={(e) => {this.searchText(e)}} placeholder="Text input" />
             </div>
