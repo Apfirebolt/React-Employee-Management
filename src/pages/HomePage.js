@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import Loader from 'react-loader-spinner'
 import axios from 'axios';
+import {
+  BrowserRouter as Router,
+  Link
+} from "react-router-dom";
 
 class HomePage extends Component {
   constructor(props) {
@@ -8,8 +12,10 @@ class HomePage extends Component {
     this.state = {
       apiData: [],
       dataLoaded: true,
-      error_text: ''
+      error_text: '',
+      search_text: ''
     }
+    this.searchText = this.searchText.bind(this);
     this.loadAPIData = this.loadAPIData.bind(this);
   }
 
@@ -34,18 +40,32 @@ class HomePage extends Component {
       })
   }
 
-  render() {
-    const { dataLoaded, apiData } = this.state;
+  searchText(e) {
+    const { search_text } = this.state;
+    this.setState({
+      search_text: e.target.value,
+    });
+  }
 
+  render() {
+    const { dataLoaded, apiData, search_text } = this.state;
+    let filteredData = apiData.filter((item) => {
+      return item.first_name.indexOf(search_text) != -1;
+    });
     if(dataLoaded) {
       return (
         <div>
-          <p className="subtitle">Data is now loaded!</p>
+          <div className="field">
+            <label className="label">Enter Name to search! {search_text}</label>
+            <div className="control">
+              <input className="input" type="text" onChange={(e) => {this.searchText(e)}} placeholder="Text input" />
+            </div>
+          </div>
 
           <table className="table">
             <thead>
             <tr>
-              <th><abbr title="id">SN</abbr></th>
+              <th>SN</th>
               <th>First Name</th>
               <th>Last Name</th>
               <th>Company</th>
@@ -59,10 +79,10 @@ class HomePage extends Component {
             </thead>
 
             <tbody>
-            {apiData.map((item, index) => {
+            {filteredData.map((item, index) => {
               return (
                 <tr key={item.id}>
-                  <td>{item.id}</td>
+                  <td><Link to="/employee" >{item.id}</Link></td>
                   <td>{item.first_name}</td>
                   <td>{item.last_name}</td>
                   <td>{item.company_name}</td>
