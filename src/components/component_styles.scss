@@ -1,0 +1,12 @@
+.button_container {
+  display: flex;
+  justify-content: space-between;
+
+  button {
+    min-width: 120px;
+  }
+}
+
+.columns {
+  margin: 1.5rem auto !important;
+}

@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import Loader from 'react-loader-spinner'
 import axios from 'axios';
+
+import PaginationComponent from '../components/PaginationComponent';
+
 import './page_styles.scss';
 import {
   BrowserRouter as Router,
@@ -14,12 +17,17 @@ class HomePage extends Component {
       apiData: [],
       dataLoaded: true,
       error_text: '',
-      search_text: ''
+      search_text: '',
+      current_page: 1,
+      itemsPerPage: 5,
+      totalPages: 0
     }
     this.searchText = this.searchText.bind(this);
     this.sortResults = this.sortResults.bind(this);
     this.loadAPIData = this.loadAPIData.bind(this);
     this.goToDetail = this.goToDetail.bind(this);
+    this.changePage = this.changePage.bind(this);
+    this.paginateChange = this.paginateChange.bind(this);
   }
 
   componentDidMount() {
@@ -40,7 +48,7 @@ class HomePage extends Component {
     this.setState({dataLoaded: false});
     axios.get(url)
       .then((response) => {
-        console.log('Response data : ', response.data);
+
         this.setState({
           apiData: response.data,
           dataLoaded: true
@@ -56,6 +64,40 @@ class HomePage extends Component {
     this.setState({
       search_text: e.target.value,
     });
+  }
+
+  changePage(e) {
+    let { current_page } = this.state;
+    let page_type = e.target.getAttribute("data-role");
+
+    if(page_type === 'prev') {
+      if(current_page !== 1)
+        current_page = parseInt(current_page) - 1;
+    }
+
+    if(page_type === 'next') {
+      current_page = parseInt(current_page) + 1;
+    }
+
+    console.log('The page type is : ', page_type, current_page);
+
+
+    this.setState({
+      current_page: current_page
+    })
+  }
+
+  paginateChange(e) {
+    const { current_page } = this.state;
+    let page = e.target.getAttribute("value");
+    if(page === '...')
+    {
+      return false;
+    }
+    this.setState({
+      current_page: page
+    });
+    console.log('Paginate change method called..', page);
   }
 
   sortResults(event) {
@@ -142,10 +184,16 @@ class HomePage extends Component {
   }
 
   render() {
-    const { dataLoaded, apiData, search_text } = this.state;
+    const { dataLoaded, apiData, search_text, current_page, itemsPerPage, totalPages } = this.state;
+
+    const indexofLastPost = current_page * itemsPerPage;
+    const indexofFirstPost = indexofLastPost - itemsPerPage;
+
     let filteredData = apiData.filter((item) => {
       return item.first_name.indexOf(search_text) !== -1;
     });
+
+    const currentPosts = filteredData.slice(indexofFirstPost, indexofLastPost);
 
     if(dataLoaded) {
       return (
@@ -162,7 +210,7 @@ class HomePage extends Component {
             <tr>
               <th data-role="sn" onClick={(e) => {
                 this.sortResults(e)
-              }}>SN <i class="fa fa-angle-down"></i></th>
+              }}>SN <i className="fa fa-angle-down"></i></th>
               <th data-role="firstName" onClick={(e) => {
                 this.sortResults(e)
               }}>First Name<i className="fa fa-angle-down"></i></th>
@@ -194,7 +242,7 @@ class HomePage extends Component {
             </thead>
 
             <tbody>
-            {filteredData.map((item, index) => {
+            {currentPosts.map((item, index) => {
               return (
                 <tr key={item.id} onClick={(e) => {this.goToDetail(e, item.id)}}>
                   <td><Link to="/employee" >{item.id}</Link></td>
@@ -212,6 +260,14 @@ class HomePage extends Component {
             })}
             </tbody>
           </table>
+          <PaginationComponent
+            currentPage={current_page}
+            itemsPerPage={itemsPerPage}
+            changePage={this.changePage}
+            totalItems={filteredData.length}
+            paginateChange={this.paginateChange}
+            totalPages={Math.ceil(filteredData.length/5)}
+          />
         </div>
       )
     }
