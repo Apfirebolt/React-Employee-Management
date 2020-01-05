@@ -53,29 +53,24 @@ class PaginationComponent extends Component {
     const { pageList, current_page } = this.state;
     return (
       <div className="container">
-        <p>Pagination component {currentPage} - {itemsPerPage} </p>
-
         <div className="button_container">
           <button className="button" data-role="prev" onClick={(e) => {changePage(e)}}>Previous</button>
-          {totalItems} - {totalPages}
           {pageList.map((item, index) => {
             return (
-              <button key={index} value={item} className="button" onClick={(e) => paginateChange(e)}>{item}</button>
+              <button key={index} value={item} className="button is-success" onClick={(e) => paginateChange(e)}>{item}</button>
             )
           })}
           <button className="button" data-role="next" onClick={(e) => {changePage(e)}}>Next</button>
         </div>
         <div className="columns">
           <div className="column">
-            <label htmlFor="page_number">Enter Page Number</label>
+            <label htmlFor="page_number" className="has-text-danger is-size-6">Enter Page Number, You are currently on page
+              <span className="has-text-info is-size-5">{currentPage}</span></label>
           </div>
           <div className="column is-two-thirds">
             <div className="control">
-              <input className="input is-primary" type="number" placeholder="Go to page number" onChange={(e) => {this.changePage(e)}}/>
+              <input className="input is-primary" type="number" placeholder="Go to page number" onChange={(e) => {paginateChange(e)}}/>
             </div>
-          </div>
-          <div className="column">
-            <button className="button" value={current_page} onClick={(e) => paginateChange(e)}>Go to Page</button>
           </div>
         </div>
       </div>

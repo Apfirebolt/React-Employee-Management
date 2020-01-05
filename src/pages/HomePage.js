@@ -60,36 +60,48 @@ class HomePage extends Component {
   }
 
   searchText(e) {
-    const { search_text } = this.state;
+    const { search_text, current_page } = this.state;
+    if(!search_text)
+    {
+      this.setState({
+        current_page: 1
+      })
+    }
     this.setState({
       search_text: e.target.value,
     });
   }
 
   changePage(e) {
-    let { current_page } = this.state;
+    let { current_page, apiData, search_text } = this.state;
     let page_type = e.target.getAttribute("data-role");
-
+    let filteredData = apiData.filter((item) => {
+      return item.first_name.indexOf(search_text) !== -1;
+    });
+    let max_pages = Math.ceil(filteredData.length/5);
     if(page_type === 'prev') {
-      if(current_page !== 1)
-        current_page = parseInt(current_page) - 1;
+      if(current_page <= 1)
+        current_page = 1;
     }
 
     if(page_type === 'next') {
+      if(current_page >= max_pages)
+        return false;
+
       current_page = parseInt(current_page) + 1;
     }
 
-    console.log('The page type is : ', page_type, current_page);
-
-
     this.setState({
       current_page: current_page
-    })
+    });
   }
 
   paginateChange(e) {
     const { current_page } = this.state;
-    let page = e.target.getAttribute("value");
+    let page = e.target.value;
+    if(!page) {
+      return false;
+    }
     if(page === '...')
     {
       return false;
@@ -97,7 +109,6 @@ class HomePage extends Component {
     this.setState({
       current_page: page
     });
-    console.log('Paginate change method called..', page);
   }
 
   sortResults(event) {
@@ -199,7 +210,7 @@ class HomePage extends Component {
       return (
         <div>
           <div className="field">
-            <label className="label"><i className=""></i>Enter Name to search! {search_text}</label>
+            <label className="label"><i className=""></i>Enter Name to search!</label>
             <div className="control">
               <input className="input" type="text" onChange={(e) => {this.searchText(e)}} placeholder="Text input" />
             </div>
