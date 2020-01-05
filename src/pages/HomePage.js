@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Loader from 'react-loader-spinner'
 import axios from 'axios';
 
+import Navbar from '../components/Navbar';
 import PaginationComponent from '../components/PaginationComponent';
 
 import './page_styles.scss';
@@ -11,8 +12,8 @@ import {
 } from "react-router-dom";
 
 class HomePage extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
       apiData: [],
       dataLoaded: true,
@@ -31,6 +32,7 @@ class HomePage extends Component {
   }
 
   componentDidMount() {
+    console.log('The props Home are : ', this.props);
     this.loadAPIData();
   }
 
@@ -82,6 +84,8 @@ class HomePage extends Component {
     if(page_type === 'prev') {
       if(current_page <= 1)
         current_page = 1;
+      else
+        current_page = parseInt(current_page) - 1;
     }
 
     if(page_type === 'next') {
@@ -209,6 +213,7 @@ class HomePage extends Component {
     if(dataLoaded) {
       return (
         <div>
+          <Navbar/>
           <div className="field">
             <label className="label"><i className=""></i>Enter Name to search!</label>
             <div className="control">

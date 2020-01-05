@@ -16,3 +16,11 @@ span.has-text-info {
   padding: 0.5rem;
   border: 1px solid grey;
 }
+
+.nav_icon {
+  color: darkred !important;
+
+  &:hover {
+    color: darksalmon !important;
+  }
+}
