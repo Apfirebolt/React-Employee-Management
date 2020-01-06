@@ -32,7 +32,6 @@ class HomePage extends Component {
   }
 
   componentDidMount() {
-    console.log('The props Home are : ', this.props);
     this.loadAPIData();
   }
 

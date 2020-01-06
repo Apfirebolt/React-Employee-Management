@@ -8,13 +8,7 @@ class Navbar extends Component {
     super(props);
 
   }
-  componentDidUpdate() {
-    console.log('The props are : ', this.props);
-  }
 
-  componentDidMount() {
-    console.log('The props are : ', this.props);
-  }
   render() {
     const { detail_page } = this.props;
     return (
